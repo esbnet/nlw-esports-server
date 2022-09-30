@@ -1,17 +1,18 @@
 import express from 'express'
 import cors from 'cors'
 
-
 import { PrismaClient } from '@prisma/client'
 import { convertHourToMinutes } from './utils/convert-hour-to-minute'
 import { convertMinutesToHour } from './utils/convert-minute-to-hour'
+
+const PORT = 3333;
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
 const prisma = new PrismaClient({
-  log: ['query'],
+  // log: ['query'],
 })
 
 app.get('/games', async (req, res) => {
@@ -88,4 +89,6 @@ app.get('/ads/:id/discord', async (req, res) => {
   return res.status(200).json({ discord: ad.discordId })
 })
 
-app.listen(3333)
+app.listen(PORT, () => {
+	console.log(`🚀 Server ready at: http://localhost:${PORT}`);
+});
